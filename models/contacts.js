@@ -12,7 +12,7 @@ const addSchema = Joi.object({
 });
 
 const updateFavoriteSchema = Joi.object({
-  avorite: Joi.boolean().required(),
+  favorite: Joi.boolean().required(),
 });
 
 const contactSchema = new Schema(
