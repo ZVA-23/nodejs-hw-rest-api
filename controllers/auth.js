@@ -48,3 +48,5 @@ module.exports = {
   register: cntrlWrapper(register),
   login: cntrlWrapper(login),
 };
+
+// "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzYTk3MmM5Yjc4NjdhMjE0ZWE2Yjk3MyIsImlhdCI6MTY3MjA2MDY0MywiZXhwIjoxNjcyMTQzNDQzfQ.Qv8Y7RlvinRCFbuwYzYPKAc0g7uE6Av8wiVEMM0bxnI";
