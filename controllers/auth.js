@@ -38,7 +38,7 @@ const login = async (req, res) => {
     id: user._id,
   };
   const token = jwt.sign(payload, SECRET_KEY, { expiresIn: "23h" });
-
+  await User.findByIdAndUpdate(user._id, { token });
   res.json({
     token,
   });
@@ -52,10 +52,17 @@ const getCurrent = (req, res) => {
   });
 };
 
+const logout = async (req, res) => {
+  const { _id } = req.user;
+  await User.findByIdAndUpdate(_id, { token: "" });
+  res.status(204, "Logout success").send();
+};
+
 module.exports = {
   register: cntrlWrapper(register),
   login: cntrlWrapper(login),
   getCurrent: cntrlWrapper(getCurrent),
+  logout: cntrlWrapper(logout),
 };
 
 // "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzYTk3MmM5Yjc4NjdhMjE0ZWE2Yjk3MyIsImlhdCI6MTY3MjA2MDY0MywiZXhwIjoxNjcyMTQzNDQzfQ.Qv8Y7RlvinRCFbuwYzYPKAc0g7uE6Av8wiVEMM0bxnI";
