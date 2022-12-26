@@ -44,9 +44,18 @@ const login = async (req, res) => {
   });
 };
 
+const getCurrent = (req, res) => {
+  const { email, subscription } = req.user;
+  res.json({
+    email,
+    subscription,
+  });
+};
+
 module.exports = {
   register: cntrlWrapper(register),
   login: cntrlWrapper(login),
+  getCurrent: cntrlWrapper(getCurrent),
 };
 
 // "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzYTk3MmM5Yjc4NjdhMjE0ZWE2Yjk3MyIsImlhdCI6MTY3MjA2MDY0MywiZXhwIjoxNjcyMTQzNDQzfQ.Qv8Y7RlvinRCFbuwYzYPKAc0g7uE6Av8wiVEMM0bxnI";
