@@ -11,4 +11,6 @@ router.post(
   cntrl.register
 );
 
+router.post("/users/login", validateBody(schemas.loginSchema), cntrl.login);
+
 module.exports = router;
