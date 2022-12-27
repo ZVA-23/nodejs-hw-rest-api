@@ -14,7 +14,6 @@ const register = async (req, res) => {
     throw HttpError(409, "Email in use");
   }
   const hashPassword = await bcrypt.hash(password, 10);
-
   const newUser = await User.create({ ...req.body, password: hashPassword });
   res.status(201).json({
     user: {
@@ -41,10 +40,14 @@ const login = async (req, res) => {
   await User.findByIdAndUpdate(user._id, { token });
   res.json({
     token,
+    user: {
+      email: user.email,
+      subscription: user.subscription,
+    },
   });
 };
 
-const getCurrent = (req, res) => {
+const getCurrent = async (req, res) => {
   const { email, subscription } = req.user;
   res.json({
     email,
@@ -64,5 +67,3 @@ module.exports = {
   getCurrent: cntrlWrapper(getCurrent),
   logout: cntrlWrapper(logout),
 };
-
-// "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzYTk3MmM5Yjc4NjdhMjE0ZWE2Yjk3MyIsImlhdCI6MTY3MjA2MDY0MywiZXhwIjoxNjcyMTQzNDQzfQ.Qv8Y7RlvinRCFbuwYzYPKAc0g7uE6Av8wiVEMM0bxnI";
