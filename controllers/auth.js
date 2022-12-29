@@ -2,7 +2,7 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const gravatar = require("gravatar");
 const path = require("path");
-const fs = require("fs, promises");
+const fs = require("fs/promises");
 
 const { User } = require("../models/user");
 const { HttpError, cntrlWrapper } = require("../helpers");
@@ -68,6 +68,8 @@ const logout = async (req, res) => {
   await User.findByIdAndUpdate(_id, { token: "" });
   res.status(204, "Logout success").send();
 };
+
+const avatarsDir = path.join(__dirname, "../", "public", "avatars");
 
 const updateAvatar = async (req, res) => {
   const { _id } = req.user;
