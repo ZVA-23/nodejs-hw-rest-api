@@ -1,6 +1,7 @@
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const gravatar = require("gravatar");
+
 const path = require("path");
 const fs = require("fs/promises");
 
@@ -28,6 +29,23 @@ const register = async (req, res) => {
       email: newUser.email,
       subscription: newUser.subscription,
     },
+  });
+};
+
+const verify = async (req, res) => {
+  const { verificationToken } = req.params;
+  const user = await User.findOne({ verificationToken });
+  if (!user) {
+    throw HttpError(404, "User not found");
+  }
+
+  await User.findByIdAndUpdate(user._id, {
+    verify: true,
+    verificationToken: "",
+  });
+
+  res.status(200).json({
+    message: "Verification successful",
   });
 };
 
@@ -87,6 +105,7 @@ const updateAvatar = async (req, res) => {
 
 module.exports = {
   register: cntrlWrapper(register),
+  verify: cntrlWrapper(verify),
   login: cntrlWrapper(login),
   getCurrent: cntrlWrapper(getCurrent),
   logout: cntrlWrapper(logout),

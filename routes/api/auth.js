@@ -17,6 +17,8 @@ router.post(
   cntrl.register
 );
 
+router.get("/users/verify/:verificationToken", cntrl.verify);
+
 router.post("/users/login", validateBody(schemas.loginSchema), cntrl.login);
 
 router.get("/users/current", authenticate, cntrl.getCurrent);
